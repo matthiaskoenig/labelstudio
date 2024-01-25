@@ -1,0 +1,19 @@
+# -----------------------------------------------------------------------------
+# DOCKER COMPOSE DEPLOYMENT
+# -----------------------------------------------------------------------------
+# https://hub.docker.com/r/heartexlabs/label-studio
+# -----------------------------------------------------------------------------
+version: '3'
+
+volumes:
+  data:
+    driver: local
+
+services:
+  labelstudio:
+    restart: always
+    image: heartexlabs/label-studio:latest
+    ports:
+      - 8123:8080
+    volumes:
+      - $(pwd)/mydata:/label-studio/data
