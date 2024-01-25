@@ -35,7 +35,6 @@ CONTAINER ID   IMAGE                             COMMAND                  CREATE
 curl localhost:8123
 ```
 
-
 ## Setup proxy server
 The proxy server requires a proxy nginx configuration and the necessary certificates.
 Login to proxy server `denbi-head`
@@ -68,6 +67,8 @@ cd /var/git
 git clone https://github.com/matthiaskoenig/labelstudio.git
 cd labelstudio
 
-cp /var/git/labelstudio/nginx/annotatedb.com /etc/nginx/sites-available/annotatedb.com
+sudo cp /var/git/labelstudio/nginx/annotatedb.com /etc/nginx/sites-available/annotatedb.com
 sudo ln -s /etc/nginx/sites-available/annotatedb.com /etc/nginx/sites-enabled/
+sudo service nginx restart
+sudo service nginx status
 ```
