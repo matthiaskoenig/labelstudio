@@ -14,6 +14,6 @@ services:
     restart: always
     image: heartexlabs/label-studio:latest
     ports:
-      - 8080:8080
+      - 8123:8080
     volumes:
       - ./data:/label-studio/data

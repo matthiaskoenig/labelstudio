@@ -17,7 +17,7 @@ chown 1000 data
 ### Start containers
 initial test
 ```
-docker run -it -p 8080:8080 -v ./data:/label-studio/data heartexlabs/label-studio:latest
+docker run -it -p 8123:8080 -v ./data:/label-studio/data heartexlabs/label-studio:latest
 ```
 
 ```bash
