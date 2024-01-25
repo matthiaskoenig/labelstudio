@@ -79,5 +79,5 @@ sudo service nginx restart
 sudo service nginx status
 ```
 ```bash
-curl :8123/index.html
+curl http://192.168.0.135:8123/index.html
 ```

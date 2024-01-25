@@ -8,7 +8,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name annotatedb.com;
+    server_name annotatedb.com www.annotatedb.com;
 
     # letsencrypt webroot authenticator
     location /.well-known/acme-challenge/ {
@@ -25,7 +25,7 @@ server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
 
-    server_name annotatedb.com;
+    server_name www.annotatedb.com;
     ssl_certificate     /etc/letsencrypt/live/annotatedb.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/annotatedb.com/privkey.pem;
 
