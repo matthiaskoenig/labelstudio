@@ -38,7 +38,7 @@ CONTAINER ID   IMAGE                             COMMAND                  CREATE
 ```
 
 ```bash
-wget localhost:8080/index.html
+curl localhost:8123/index.html
 ```
 
 ## Setup proxy server
@@ -77,4 +77,7 @@ sudo cp /var/git/labelstudio/nginx/annotatedb.com /etc/nginx/sites-available/ann
 sudo ln -s /etc/nginx/sites-available/annotatedb.com /etc/nginx/sites-enabled/
 sudo service nginx restart
 sudo service nginx status
+```
+```bash
+curl :8123/index.html
 ```

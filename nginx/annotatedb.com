@@ -50,7 +50,7 @@ server {
 
         location / {
                 # denbi-cloud: node2
-                proxy_pass http://192.168.0.135:8080;
+                proxy_pass http://192.168.0.135:8123;
                 proxy_set_header HOST $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-for $remote_addr;
