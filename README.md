@@ -1,5 +1,8 @@
 # labelstudio
 
+Setting up labelstudio server
+
+![https://docs.heartex.com/images/LSE_k8s_scheme.png](https://docs.heartex.com/images/LSE_k8s_scheme.png)
 
 
 # annotations
