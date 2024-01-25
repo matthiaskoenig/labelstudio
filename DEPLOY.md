@@ -38,7 +38,7 @@ CONTAINER ID   IMAGE                             COMMAND                  CREATE
 ```
 
 ```bash
-curl localhost:8080
+wget localhost:8080/index.html
 ```
 
 ## Setup proxy server
