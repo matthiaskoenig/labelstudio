@@ -11,13 +11,19 @@ cd /var/git
 git clone https://github.com/matthiaskoenig/labelstudio.git
 cd labelstudio
 mkdir data
+chown 1000 data
 ```
 
 ### Start containers
+initial test
+```
+docker run -it -p 8080:8080 -v ./data:/label-studio/data heartexlabs/label-studio:latest
+```
+
 ```bash
 git pull
 docker-compose -f docker-compose.yml down
-docker-compose -f docker-compose.yml up --force-recreate --always-recreate-deps --build --detach
+docker-compose -f docker-compose.yml up --detach
 ```
 
 ### Test connection
@@ -32,7 +38,7 @@ CONTAINER ID   IMAGE                             COMMAND                  CREATE
 ```
 
 ```bash
-curl localhost:8123
+curl localhost:8080
 ```
 
 ## Setup proxy server
