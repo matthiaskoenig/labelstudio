@@ -11,5 +11,5 @@ https://labelstud.io/guide/install#Install-with-Docker
 
 To install and start Label Studio at http://localhost:8080, storing all labeling data in ./mydata directory, run the following:
 ```
-docker run -it -p 8080:8080 -v $(pwd)/mydata:/label-studio/data heartexlabs/label-studio:latest
+docker run -it -p 8080:8123 -v $(pwd)/mydata:/label-studio/data heartexlabs/label-studio:latest
 ```
