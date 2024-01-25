@@ -16,4 +16,4 @@ services:
     ports:
       - 8123:8080
     volumes:
-      - $(pwd)/mydata:/label-studio/data
+      - ./data:/label-studio/data
