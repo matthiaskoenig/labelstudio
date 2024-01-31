@@ -1,18 +1,30 @@
-# labelstudio
+# label-studio-tools
 
-Setting up labelstudio server
+This repository provides an interface for label-studio to programatically 
+manage annotation tasks. Main focus is the annotation of histological images.
 
-![https://docs.heartex.com/images/LSE_k8s_scheme.png](https://docs.heartex.com/images/LSE_k8s_scheme.png)
+This uses the label-studio SDK to manage the annotation tasks.
 
+https://labelstud.io/blog/5-tips-and-tricks-for-label-studio-s-api-and-sdk/  
+https://labelstud.io/guide/sdk
 
-# annotations
-Label converter
-https://github.com/HumanSignal/label-studio-converter
+# Installation
+## virtual environment
+Create a virtual environment and install the dependencies:
 
-# Install with docker
-https://labelstud.io/guide/install#Install-with-Docker
-
-To install and start Label Studio at http://localhost:8080, storing all labeling data in ./mydata directory, run the following:
+```bash
+mkvirtualenv labelstudio --python=python3.11
+(labelstudio) pip install -r requirements.txt
 ```
-docker run -it -p 8080:8080 -v ./data:/label-studio/data heartexlabs/label-studio:latest
+
+## SDK url and key
+Create an `.env` file and add the `API_URL` and `API_KEY`.
+The `API_KEY` is available from the label-studio interface under user settings.
 ```
+cp .env.template .env
+```
+
+## Test connection
+To test the SDK connection use the `sdktest.py` script.
+
+Matthias König 2024

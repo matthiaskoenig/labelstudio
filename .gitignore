@@ -1,5 +1,10 @@
+__pycache__
+
 # pycharm project
 .idea
+
+# secrets file
+.env
 
 # labeling data
 data

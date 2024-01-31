@@ -1,0 +1,6 @@
+rich
+label-studio
+label-studio-tools
+label-studio-converter
+label-studio-sdk
+python-dotenv
