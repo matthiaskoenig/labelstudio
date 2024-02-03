@@ -1,6 +1,6 @@
 from typing import List
 
-from lstools.console import console
+from console import console
 from label_studio_sdk import Client, Project
 from dotenv import load_dotenv
 import os
