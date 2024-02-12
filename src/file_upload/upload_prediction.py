@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 from dotenv import load_dotenv
 from label_studio_sdk import Client, Project
@@ -18,7 +18,7 @@ def create_client() -> Client:
 
 def get_project(client: Client) -> Project:
     project_name = os.getenv("PROJECT")
-    filtered = list(filter(lambda p: p["name"] == project_name, client.list_projects()))
+    filtered = list(filter(lambda p: p.params["title"] == project_name, client.list_projects()))
 
     if len(filtered) == 0:
         raise NameError(f"No project with name '{project_name}' found")
@@ -36,23 +36,22 @@ def get_data_source():
 
 def get_image_task_dict(tasks: List[Dict]) -> dict:
     return {
-        Path(task["data"]["image"]).name: task
+        Path(task["data"]["img"]).name: task
         for task in tasks
     }
 
 
 def get_storage_location_path(task: Dict) -> Path:
-    return Path(task["data"]["image"]).parent
+    return Path(task["data"]["img"]).parent
 
 
 def create_data_dict(entry: Dict) -> Dict:
     return {
-        "project": entry["project"],
         "subject": entry["subject"],
         "species": entry["species"],
         "group": entry["group"],
         "dataset": entry["dataset"],
-        "sample": entry["sample"]
+        "sample": str(entry["sample"])
     }
 
 
@@ -64,8 +63,10 @@ class DataUpload:
         self.data_source = get_data_source()
         self.storage_location = os.getenv("STORAGE_LOCATION")
 
-    def upload_datasets(self) -> None:
+    def upload_datasets(self, datasets: Optional[List[str]]) -> None:
         for dataset_dir in self.data_source.iterdir():
+            if datasets and dataset_dir.name not in datasets:
+                continue
             self.upload_dataset(dataset_dir)
 
     def upload_dataset(self, dataset_dir: Path) -> None:
@@ -96,22 +97,32 @@ class DataUpload:
 
         # create non-existing tasks
         for entry in new:
-            to_create.append(
-                {
-                    "image": f"{self.storage_location}/?d={dataset}/{entry['image']}",
-                }.update(create_data_dict(entry))
-            )
+            new_task = {
+                "img": f"{self.storage_location}/?d={dataset}/image/{entry['image']}",
+            }
+
+            new_task.update(create_data_dict(entry))
+            to_create.append(new_task)
 
         if len(to_create) > 0:
             console.print(f"Creating {len(to_create)} new tasks", style="green")
-        self.project.import_tasks(to_create)
+            self.project.import_tasks(to_create)
 
         # update data dict for existing tasks
         for image, entry in tqdm(existing.items(), desc=f"Updating {len(existing)} tasks", unit="tasks"):
             task = image_task_dict[image]
+            data_dict = create_data_dict(entry)
+
+            # check if task is already up-to-date
+            if all(item in task["data"].items() for item in data_dict.items()):
+                continue
+
+            data = task["data"]
+            data.update(create_data_dict(entry))
+
             self.project.update_task(
                 task["id"],
-                data=task["data"].update(create_data_dict(entry))
+                data=data
             )
 
     def create_predictions(self, dataset_dir: Path, data_config: List[Dict]) -> None:
@@ -127,7 +138,7 @@ class DataUpload:
             with open(polygon_path, "r") as f:
                 results: List[Dict] = json.load(f)
 
-            task = image_task_dict[image]
+            task = image_task_dict[image.name]
 
             # delete existing predictions
             if len(task["predictions"]) != 0:
@@ -141,4 +152,5 @@ class DataUpload:
 
 if __name__ == "__main__":
     data_upload = DataUpload()
-    data_upload.upload_datasets()
+    datasets = ["sample_data"]
+    data_upload.upload_datasets(datasets)
