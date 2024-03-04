@@ -15,7 +15,7 @@ services:
     image: heartexlabs/label-studio:latest
     environment:
       - LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
-      - LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/data/labelstudio
+      - LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data
     ports:
       - 8123:8080
     volumes:
