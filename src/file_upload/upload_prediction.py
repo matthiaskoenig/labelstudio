@@ -63,13 +63,13 @@ class DataUpload:
         self.data_source = get_data_source()
         self.storage_location = os.getenv("STORAGE_LOCATION")
 
-    def upload_datasets(self, datasets: Optional[List[str]]) -> None:
+    def upload_datasets(self, datasets: Optional[Dict[str, str]]) -> None:
         for dataset_dir in self.data_source.iterdir():
             if datasets and dataset_dir.name not in datasets:
                 continue
-            self.upload_dataset(dataset_dir)
+            self.upload_dataset(dataset_dir, datasets[dataset_dir.name])
 
-    def upload_dataset(self, dataset_dir: Path) -> None:
+    def upload_dataset(self, dataset_dir: Path, remote_name: str) -> None:
         with open(dataset_dir / "data_config.json", "r") as f:
             data_config = json.load(f)
 
@@ -80,7 +80,7 @@ class DataUpload:
 
         self.create_predictions(dataset_dir, data_config)
 
-    def create_or_update_tasks(self, data_config: List[Dict], dataset: str) -> None:
+    def create_or_update_tasks(self, data_config: List[Dict], remote_name: str) -> None:
         image_task_dict = get_image_task_dict(self.project.get_tasks())
 
         existing = {}
@@ -98,7 +98,7 @@ class DataUpload:
         # create non-existing tasks
         for entry in new:
             new_task = {
-                "img": f"{self.storage_location}/?d={dataset}/image/{entry['image']}",
+                "img": f"{self.storage_location}/?d={remote_name}/image/{entry['image']}",
             }
             new_task.update(create_data_dict(entry))
             to_create.append(new_task)
@@ -151,5 +151,5 @@ class DataUpload:
 
 if __name__ == "__main__":
     data_upload = DataUpload()
-    datasets = ["steatosis_2024-03-04"]
+    datasets = {"sample_data": "steatosis_2024-03-04"}
     data_upload.upload_datasets(datasets)
