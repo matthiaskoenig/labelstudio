@@ -32,7 +32,13 @@ To test the SDK connection use the `sdktest.py` script.
 - copy images & raw predictions to folder and set the folder in the `.env` file
 - update API key from labelstudio; https://annotatedb.com/user/account
 - Create new project in labelstudio: `Macrosteatosis` and set value in `.env`
-- Upload images to server; -> File Server: https://labelstud.io/guide/storage.html#Local-storage
+- Upload images to server; -> File Server: https://labelstud.io/guide/storage.html#Local-storage; mount volume in docker container; TODO: better solution for images;
+- Settings -> Cloud Storage -> ... -> sync
+- Setup labeling configuration; Settings -> Labeling Interface; 
+```
+
+```
+- 
 
 
 

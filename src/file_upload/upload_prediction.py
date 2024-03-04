@@ -100,7 +100,6 @@ class DataUpload:
             new_task = {
                 "img": f"{self.storage_location}/?d={dataset}/image/{entry['image']}",
             }
-
             new_task.update(create_data_dict(entry))
             to_create.append(new_task)
 
