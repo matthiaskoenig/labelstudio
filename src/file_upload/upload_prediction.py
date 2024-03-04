@@ -151,5 +151,5 @@ class DataUpload:
 
 if __name__ == "__main__":
     data_upload = DataUpload()
-    datasets = ["sample_data"]
+    datasets = ["steatosis_2024-03-04"]
     data_upload.upload_datasets(datasets)

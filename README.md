@@ -36,9 +36,20 @@ To test the SDK connection use the `sdktest.py` script.
 - Settings -> Cloud Storage -> ... -> sync
 - Setup labeling configuration; Settings -> Labeling Interface; 
 ```
-
+<View>
+  <Image name="image" value="$img"/>
+	<KeyPointLabels name="keypoint" toName="image">
+    <Label value="macrosteatosis keypoint" background="#04FF00"/>
+  </KeyPointLabels>
+  <BrushLabels name="brush" toName="image">
+    <Label value="microsteatosis brush" background="#FFF79E"/>
+  </BrushLabels>
+  <PolygonLabels name="polygon" toName="image" strokeWidth="3" pointSize="small" opacity="0.3">
+    <Label value="macrosteatosis polygon" background="#00FFFB"/>
+  </PolygonLabels>
+</View>
 ```
-- 
+- run script
 
 
 
