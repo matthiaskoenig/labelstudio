@@ -8,4 +8,6 @@ __pycache__
 
 # labeling data
 data
+
+# environment files
 .env

@@ -27,4 +27,9 @@ cp .env.template .env
 ## Test connection
 To test the SDK connection use the `sdktest.py` script.
 
-Matthias König 2024
+
+## Setup trainings database
+
+
+
+Matthias König & Jonas Küttner 2024

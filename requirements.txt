@@ -1,6 +1,6 @@
-rich
-label-studio
-label-studio-tools
-label-studio-converter
-label-studio-sdk
-python-dotenv
+rich>=13.7.1
+label-studio>=1.11.0
+label-studio-tools>=0.0.3
+label-studio-converter>=0.0.57
+label-studio-sdk>=0.0.32
+python-dotenv>=1.0.1
