@@ -28,11 +28,13 @@ cp .env.template .env
 To test the SDK connection use the `sdktest.py` script.
 
 
-## Setup trainings database
+## Setup trainings database macrosteatosis
 - copy images & raw predictions to folder and set the folder in the `.env` file
 - update API key from labelstudio; https://annotatedb.com/user/account
 - Create new project in labelstudio: `Macrosteatosis` and set value in `.env`
-- Upload images to server; -> File Server: https://labelstud.io/guide/storage.html#Local-storage; mount volume in docker container; TODO: better solution for images;
+- Upload images to server; -> File Server: https://labelstud.io/guide/storage.html#Local-storage; mount volume in docker container; TODO: better solution for images; volume: `./data:/label-studio/data`
+- scp -r steatosis_2024-03-05/ denbi-head:/home/ubuntu/
+- scp -r steatosis_2024-03-05/ node6:/var/git/labelstudio/data/
 - Settings -> Cloud Storage -> ... -> sync
 - Setup labeling configuration; Settings -> Labeling Interface; 
 ```
@@ -50,10 +52,20 @@ To test the SDK connection use the `sdktest.py` script.
 </View>
 ```
 - run script
-
-
-
 - run the `upload_prediction` script
+
+## Annotation task
+- open task
+- group by label, hide `polygon`
+- settings: 
+  - [x] show hotkeys on tooltips
+- first annotate keypoints
+  - select & move to center (dupletten; combined macrosteatosis droplets)
+  - Select label at bottom (macrosteatosis keypoint 1) and click new
+- to save click submit: can be changed later on
+- objects for macrosteatosis should be larger then nucleus
+
+## Export labels
 
 
 Matthias König & Jonas Küttner 2024

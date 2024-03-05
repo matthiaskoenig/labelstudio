@@ -151,5 +151,6 @@ class DataUpload:
 
 if __name__ == "__main__":
     data_upload = DataUpload()
-    datasets = {"sample_data": "steatosis_2024-03-04"}
+    # map local folder to remote folder
+    datasets = {"steatosis_2024-03-05": "steatosis_2024-03-05"}
     data_upload.upload_datasets(datasets)
