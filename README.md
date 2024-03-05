@@ -56,10 +56,10 @@ To test the SDK connection use the `sdktest.py` script.
 
 ## Annotation task
 - open task
-- group by label, hide `polygon`
 - settings: 
   - [x] show hotkeys on tooltips
-- first annotate keypoints
+- group by label, hide `polygon` to only see points
+- annotate keypoints
   - select & move to center (dupletten; combined macrosteatosis droplets)
   - Select label at bottom (macrosteatosis keypoint 1) and click new
 - to save click submit: can be changed later on
