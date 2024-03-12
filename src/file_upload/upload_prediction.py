@@ -45,16 +45,6 @@ def get_storage_location_path(task: Dict) -> Path:
     return Path(task["data"]["img"]).parent
 
 
-def create_data_dict(entry: Dict) -> Dict:
-    return {
-        "subject": entry["subject"],
-        "species": entry["species"],
-        "group": entry["group"],
-        "dataset": entry["dataset"],
-        "sample": str(entry["sample"])
-    }
-
-
 class DataUpload:
     def __init__(self):
         load_dotenv()
@@ -76,9 +66,21 @@ class DataUpload:
         if len(data_config) == 0:
             console.print(f"The data_config.json is empty", style="red")
 
-        self.create_or_update_tasks(data_config, dataset_dir.stem)
+        self.create_or_update_tasks(data_config, remote_name)
 
         self.create_predictions(dataset_dir, data_config)
+
+    def create_data_dict(self, entry: Dict, remote_name: str) -> Dict:
+        return {
+            "img": f"{self.storage_location}/?d={remote_name}/image/{entry['image']}",
+            "image": entry["image"],
+            "subject": entry["subject"],
+            "species": entry["species"],
+            "group": entry["group"],
+            "dataset": entry["dataset"],
+            "tile": str(entry["tile"]),
+            "diet weeks": str(entry["diet weeks"])
+        }
 
     def create_or_update_tasks(self, data_config: List[Dict], remote_name: str) -> None:
         image_task_dict = get_image_task_dict(self.project.get_tasks())
@@ -97,11 +99,7 @@ class DataUpload:
 
         # create non-existing tasks
         for entry in new:
-            new_task = {
-                "img": f"{self.storage_location}/?d={remote_name}/image/{entry['image']}",
-            }
-            new_task.update(create_data_dict(entry))
-            to_create.append(new_task)
+            to_create.append(self.create_data_dict(entry, remote_name))
 
         if len(to_create) > 0:
             console.print(f"Creating {len(to_create)} new tasks", style="green")
@@ -110,18 +108,15 @@ class DataUpload:
         # update data dict for existing tasks
         for image, entry in tqdm(existing.items(), desc=f"Updating {len(existing)} tasks", unit="tasks"):
             task = image_task_dict[image]
-            data_dict = create_data_dict(entry)
+            data_dict = self.create_data_dict(entry, remote_name)
 
             # check if task is already up-to-date
-            if all(item in task["data"].items() for item in data_dict.items()):
+            if task["data"] == data_dict:
                 continue
-
-            data = task["data"]
-            data.update(create_data_dict(entry))
 
             self.project.update_task(
                 task["id"],
-                data=data
+                data=data_dict
             )
 
     def create_predictions(self, dataset_dir: Path, data_config: List[Dict]) -> None:
@@ -152,5 +147,5 @@ class DataUpload:
 if __name__ == "__main__":
     data_upload = DataUpload()
     # map local folder to remote folder
-    datasets = {"steatosis_2024-03-05": "steatosis_2024-03-05"}
+    datasets = {"sample_data": "steatosis_2024-03-05"}
     data_upload.upload_datasets(datasets)
