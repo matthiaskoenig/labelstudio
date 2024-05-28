@@ -72,7 +72,7 @@ class DataUpload:
 
     def create_data_dict(self, entry: Dict, remote_name: str) -> Dict:
         return {
-            "img": f"{self.storage_location}/?d={remote_name}/image/{entry['image']}",
+            "img": f"{self.storage_location}/?d={remote_name}/{entry['image']}",
             "image": entry["image"],
             "subject": entry["subject"],
             "species": entry["species"],
@@ -149,10 +149,11 @@ if __name__ == "__main__":
     
     - predictions: predictions by algorithm
     - data_config.json: meta data for predictions/tasks
+    
     """
 
 
     data_upload = DataUpload()
     # map local folder to remote folder
-    datasets = {"steatosis_2024-05-28": "steatosis_2024-05-28"}
+    datasets = {"sample_data": "steatosis_2024-05-28"}
     data_upload.upload_datasets(datasets)
