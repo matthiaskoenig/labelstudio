@@ -6,6 +6,7 @@ On the actual server the containers are orchestrated using `docker-compose`.
 
 ### Login to server
 FIXME: ssh certificates not working for the jump to the individual nodes
+FIXME: better storage handling
 ```
 ssh denbi-node-6
 ```
@@ -29,10 +30,17 @@ docker-compose -f docker-compose.yml down
 # cleanup data
 rm -rf data
 mkdir data
-chown 1000 data
+sudo chown -R 1000:1000 data
+sudo chmod -R 777 data
 
 # allow login
 LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK=false
+
+# start server
+docker-compose -f docker-compose.yml up --detach
+
+# create login
+LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK=true
 docker-compose -f docker-compose.yml up --detach
 ```
 

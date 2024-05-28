@@ -145,7 +145,14 @@ class DataUpload:
 
 
 if __name__ == "__main__":
+    """Requires the following information:
+    
+    - predictions: predictions by algorithm
+    - data_config.json: meta data for predictions/tasks
+    """
+
+
     data_upload = DataUpload()
     # map local folder to remote folder
-    datasets = {"sample_data": "steatosis_2024-03-05"}
+    datasets = {"steatosis_2024-05-28": "steatosis_2024-05-28"}
     data_upload.upload_datasets(datasets)
