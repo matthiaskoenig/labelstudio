@@ -3,7 +3,12 @@ This section provides instructions to deploy `labelstudio` on a server. In many 
 
 ## Setup actual server
 On the actual server the containers are orchestrated using `docker-compose`.
-Login to server `denbi-node-6`
+
+### Login to server
+FIXME: ssh certificates not working for the jump to the individual nodes
+```
+ssh denbi-node-6
+```
 
 ### Clone repository
 ```bash
