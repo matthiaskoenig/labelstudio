@@ -20,14 +20,19 @@ chown 1000 data
 ```
 
 ### Start containers
-initial test
-```
-docker run -it -p 8123:8080 -v ./data:/label-studio/data heartexlabs/label-studio:latest
-```
 
 ```bash
 git pull
+# stop old containers
 docker-compose -f docker-compose.yml down
+
+# cleanup data
+rm -rf data
+mkdir data
+chown 1000 data
+
+# allow login
+LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK=false
 docker-compose -f docker-compose.yml up --detach
 ```
 
